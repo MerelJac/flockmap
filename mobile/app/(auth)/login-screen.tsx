@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
 
-export default function LoginScreen({ navigation }: any) {
+export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }: any) {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) Alert.alert("Login failed", error.message);
-    else Alert.alert("Success", "Logged in!");
+    else router.push("/(tabs)")
   };
 
   return (

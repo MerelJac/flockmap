@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { supabase } from "@/lib/supabase";
+import { router } from "expo-router";
 
-export default function ForgotPasswordScreen({ navigation }: any) {
+export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState("");
 
   const handleReset = async () => {
@@ -10,7 +11,7 @@ export default function ForgotPasswordScreen({ navigation }: any) {
     if (error) Alert.alert("Error", error.message);
     else {
       Alert.alert("Check your email", "We sent a reset link to your inbox.");
-      navigation.navigate("Login");
+      router.push("/(auth)/login-screen");
     }
   };
 

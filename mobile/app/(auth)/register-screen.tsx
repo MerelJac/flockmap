@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { supabase } from "@/lib/supabase";
+import { router } from "expo-router";
 
-export default function RegisterScreen({ navigation }: any) {
+export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,7 +12,7 @@ export default function RegisterScreen({ navigation }: any) {
     if (error) Alert.alert("Error", error.message);
     else {
       Alert.alert("Check your email", "We’ve sent you a confirmation link.");
-      navigation.navigate("Login");
+      router.push("/(auth)/login-screen");
     }
   };
 

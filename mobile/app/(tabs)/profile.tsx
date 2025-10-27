@@ -43,7 +43,7 @@ export default function ProfileScreen() {
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 16 }}>
+      <Text style={{ fontSize: 24, fontWeight: "bold", marginVertical: 16 }}>
         My Profile
       </Text>
 
