@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { supabase } from "@/lib/supabase";
+import { router } from "expo-router";
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
@@ -42,13 +43,13 @@ export default function LoginScreen({ navigation }: any) {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+      <TouchableOpacity onPress={() => router.push("/(auth)/forgot-password-screen")}>
         <Text style={{ marginTop: 20, color: "blue", textAlign: "center" }}>
           Forgot Password?
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+      <TouchableOpacity onPress={() => router.push("/(auth)/register-screen")}>
         <Text style={{ marginTop: 10, color: "blue", textAlign: "center" }}>
           Don&apos;t have an account? Register
         </Text>
