@@ -17,7 +17,7 @@ export default function MessagesScreen() {
         if (!user) throw new Error("User not authenticated");
 
         // ✅ Fetch chats from your Express backend
-        const res = await fetch(`http://localhost:3000/api/chats`, {
+        const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/chats`, {
           headers: { "x-user-id": user.id },
         });
         const data = await res.json();

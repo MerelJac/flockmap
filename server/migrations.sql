@@ -51,3 +51,9 @@ create table messages (
 -- Indexes for performance
 create index on messages (chat_id);
 create index on chat_participants (chat_id);
+
+create table user_push_tokens (
+  user_id uuid primary key references auth.users(id),
+  expo_push_token text not null,
+  updated_at timestamptz default now()
+);

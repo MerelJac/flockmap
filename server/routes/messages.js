@@ -1,5 +1,6 @@
 import express from "express";
 import { supabase } from "../supabaseClient.js";
+import { sendPushNotification } from "../utils/sendPushNotification.js";
 
 
 const router = express.Router();
@@ -11,6 +12,15 @@ router.get("/chats", async (req, res) => {
     .from("chat_participants")
     .select("chat_id, chats(name, is_group, created_at)")
     .eq("user_id", userId);
+
+
+  // ✅ Reusable push helper
+  await sendPushNotification({
+    userId,
+    title: "New Message",
+    body: content,
+    data: { chatId },
+  });
 
   if (error) return res.status(400).json({ error });
   res.json(data);

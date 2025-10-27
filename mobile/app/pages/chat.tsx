@@ -18,7 +18,7 @@ export default function ChatScreen() {
   const flatListRef = useRef<FlatList>(null);
 
   const loadMessages = async () => {
-    const res = await fetch(`http://localhost:3000/api/chats/${chatId}/messages`);
+    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/chats/${chatId}/messages`);
     const data = await res.json();
     setMessages(data);
   };
@@ -50,7 +50,7 @@ export default function ChatScreen() {
 
     if (!user) return;
 
-    await fetch(`http://localhost:3000/api/chats/${chatId}/messages`, {
+    await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/chats/${chatId}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sender_id: user.id, content: text }),

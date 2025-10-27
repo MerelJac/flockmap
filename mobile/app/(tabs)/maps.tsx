@@ -10,7 +10,7 @@ export default function MapScreen() {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/locations");
+        const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/locations`);
         const data = await res.json();
         setGroups(data);
       } catch (err) {

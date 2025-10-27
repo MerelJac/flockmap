@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
+import { registerForPushNotificationsAsync } from "@/lib/notifications";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -10,28 +11,58 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     setLoading(false);
     if (error) Alert.alert("Login failed", error.message);
-    else router.push("/(tabs)")
+    else {
+      // Set up push notification token
+      const token = await registerForPushNotificationsAsync();
+      if (token) {
+        await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/register-push-token`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: data.user.id,
+            token,
+          }),
+        });
+      }
+      // Go to main screen
+      router.push("/(tabs)");
+    }
   };
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 24 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20 }}>Login</Text>
+      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20 }}>
+        Login
+      </Text>
       <TextInput
         placeholder="Email"
         autoCapitalize="none"
         value={email}
         onChangeText={setEmail}
-        style={{ borderWidth: 1, borderRadius: 8, marginBottom: 12, padding: 10 }}
+        style={{
+          borderWidth: 1,
+          borderRadius: 8,
+          marginBottom: 12,
+          padding: 10,
+        }}
       />
       <TextInput
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-        style={{ borderWidth: 1, borderRadius: 8, marginBottom: 20, padding: 10 }}
+        style={{
+          borderWidth: 1,
+          borderRadius: 8,
+          marginBottom: 20,
+          padding: 10,
+        }}
       />
       <TouchableOpacity
         onPress={handleLogin}
@@ -43,7 +74,9 @@ export default function LoginScreen() {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push("/(auth)/forgot-password-screen")}>
+      <TouchableOpacity
+        onPress={() => router.push("/(auth)/forgot-password-screen")}
+      >
         <Text style={{ marginTop: 20, color: "blue", textAlign: "center" }}>
           Forgot Password?
         </Text>

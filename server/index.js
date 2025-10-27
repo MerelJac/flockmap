@@ -3,7 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import messagesRouter from "./routes/messages.js";
-import locationsRouter from "./routes/locations.js"
+import locationsRouter from "./routes/locations.js";
+import notificationsRouter from "./routes/notifications.js";
 
 dotenv.config();
 const app = express();
@@ -21,11 +22,10 @@ app.get("/", (req, res) => {
   res.send("✅ Flockmap API is running!");
 });
 
-// Message routes
+// IMPORT ROUTES
 app.use("/api", messagesRouter);
-
-// Location routes
 app.use("/api", locationsRouter);
+app.use("/api", notificationsRouter);
 
 // verify Supabase JWT coming from Expo app
 app.get("/me", async (req, res) => {
@@ -41,7 +41,6 @@ app.get("/me", async (req, res) => {
   if (error || !user) return res.status(401).json({ error: "Invalid token" });
   res.json({ user });
 });
-
 
 // Example: get all users (from your profiles table)
 app.get("/profiles", async (req, res) => {
