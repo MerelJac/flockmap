@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import messagesRouter from "./routes/messages.js";
+import locationsRouter from "./routes/locations.js"
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,9 @@ app.get("/", (req, res) => {
 
 // Message routes
 app.use("/api", messagesRouter);
+
+// Location routes
+app.use("/api", locationsRouter);
 
 // verify Supabase JWT coming from Expo app
 app.get("/me", async (req, res) => {

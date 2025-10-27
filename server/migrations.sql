@@ -13,13 +13,13 @@ create table profiles (
 
 -- Groups table (for Flockmap)
 create table groups (
-  id uuid primary key default gen_random_uuid(),
+  id uuid primary key default uuid_generate_v4(),
   name text not null,
   description text,
-  lat double precision,
-  lng double precision,
-  created_by uuid references profiles(id),
-  created_at timestamp default now()
+  latitude double precision not null,
+  longitude double precision not null,
+  created_by uuid references auth.users(id),
+  created_at timestamptz default now()
 );
 
 
