@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { useUser } from "@/hooks/useUser";
 import AvatarUploader from "@/components/AvatarUploader";
 import { router } from "expo-router";
+import { Header } from "@/components/header";
 
 export default function ProfileScreen() {
   const { user, loading } = useUser();
@@ -43,9 +44,8 @@ export default function ProfileScreen() {
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginVertical: 16 }}>
-        My Profile
-      </Text>
+      <Header text="My Profile"/>
+
 
       <AvatarUploader userId={user.id} />
 
