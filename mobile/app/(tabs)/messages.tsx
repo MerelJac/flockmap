@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
+import CreateNewChatButton from "@/components/messages/CreateNewChatButton";
 
 export default function MessagesScreen() {
   const [chats, setChats] = useState<any[]>([]);
@@ -43,6 +44,7 @@ export default function MessagesScreen() {
   if (!chats.length) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <CreateNewChatButton/>
         <Text>No chats yet.</Text>
       </View>
     );
