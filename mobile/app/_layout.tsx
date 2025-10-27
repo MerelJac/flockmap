@@ -28,6 +28,16 @@ export default function RootLayout() {
           name="modal"
           options={{ presentation: "modal", title: "Modal" }}
         />
+
+        {/* Chat Page — accessible globally */}
+        <Stack.Screen
+          name="pages/chat"
+          options={{
+            headerShown: true,
+            title: "Chat",
+            headerBackTitle: "Back",
+          }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

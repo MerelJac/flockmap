@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
+import messagesRouter from "./routes/messages.js";
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,9 @@ const supabase = createClient(
 app.get("/", (req, res) => {
   res.send("✅ Flockmap API is running!");
 });
+
+// Message routes
+app.use("/api", messagesRouter);
 
 // verify Supabase JWT coming from Expo app
 app.get("/me", async (req, res) => {
